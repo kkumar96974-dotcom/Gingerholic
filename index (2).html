@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gingerholic Shots — Ignite Your Day</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Mono:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --fire: #FF4500;
+      --amber: #FF8C00;
+      --gold: #FFB800;
+      --lemon: #F5E642;
+      --cream: #FFF8EE;
+      --bark: #2A1500;
+      --soil: #1A0D00;
+      --honey: #D4700A;
+      --smoke: rgba(255,69,0,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--soil);
+      color: var(--cream);
+      font-family: 'DM Mono', monospace;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* CUSTOM CURSOR */
+    .cursor {
+      width: 16px; height: 16px;
+      background: var(--fire);
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease, background 0.2s;
+      mix-blend-mode: screen;
+    }
+    .cursor-ring {
+      width: 40px; height: 40px;
+      border: 1.5px solid var(--gold);
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.35s cubic-bezier(.23,1,.32,1);
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; width: 100%;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 48px;
+      background: linear-gradient(to bottom, rgba(26,13,0,0.95), transparent);
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--cream);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s, color 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; color: var(--gold); }
+    .nav-cta {
+      background: var(--fire);
+      color: var(--cream) !important;
+      padding: 9px 22px;
+      border-radius: 2px;
+      opacity: 1 !important;
+      font-weight: 500;
+    }
+    .nav-cta:hover { background: var(--amber); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 0 48px;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 80% at 60% 50%, rgba(255,69,0,0.22) 0%, rgba(255,140,0,0.08) 40%, transparent 70%),
+                  radial-gradient(ellipse 40% 60% at 20% 80%, rgba(212,112,10,0.15) 0%, transparent 60%);
+    }
+    .hero-grain {
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+      background-size: 180px;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    /* Floating spice orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      animation: drift 12s ease-in-out infinite alternate;
+    }
+    .orb-1 { width: 500px; height: 500px; background: rgba(255,69,0,0.12); top: -100px; right: -80px; animation-delay: 0s; }
+    .orb-2 { width: 300px; height: 300px; background: rgba(255,184,0,0.10); bottom: 0; left: 10%; animation-delay: 3s; }
+    .orb-3 { width: 200px; height: 200px; background: rgba(212,112,10,0.14); top: 30%; left: 55%; animation-delay: 6s; }
+
+    @keyframes drift {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(30px, -40px) scale(1.08); }
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 760px;
+      animation: heroIn 1.2s cubic-bezier(.23,1,.32,1) both;
+    }
+    @keyframes heroIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.3s forwards;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(4rem, 10vw, 8.5rem);
+      font-weight: 900;
+      line-height: 0.92;
+      color: var(--cream);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.5s forwards;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--fire);
+      display: block;
+    }
+    .hero-sub {
+      max-width: 480px;
+      font-size: 0.85rem;
+      line-height: 1.9;
+      color: rgba(255,248,238,0.65);
+      margin-bottom: 44px;
+      letter-spacing: 0.04em;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.7s forwards;
+    }
+    .hero-btns {
+      display: flex; gap: 16px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.9s forwards;
+    }
+    .btn-primary {
+      background: var(--fire);
+      color: var(--cream);
+      border: none;
+      padding: 16px 36px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      cursor: none;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--amber); transform: translateY(-2px); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--cream);
+      border: 1px solid rgba(255,248,238,0.25);
+      padding: 16px 36px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      cursor: none;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+    /* Hero shot bottle visual */
+    .hero-visual {
+      position: absolute;
+      right: 6%;
+      top: 50%;
+      transform: translateY(-50%);
+      animation: heroIn 1.2s 0.4s cubic-bezier(.23,1,.32,1) both, float 6s 1.6s ease-in-out infinite alternate;
+    }
+    @keyframes float {
+      from { transform: translateY(-50%) rotate(-2deg); }
+      to   { transform: translateY(calc(-50% - 18px)) rotate(1deg); }
+    }
+
+    .bottle-wrap { position: relative; width: 160px; }
+    .bottle-glow {
+      position: absolute;
+      width: 220px; height: 500px;
+      background: radial-gradient(ellipse at center, rgba(255,140,0,0.35) 0%, transparent 70%);
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      filter: blur(30px);
+      animation: pulse 3s ease-in-out infinite alternate;
+    }
+    @keyframes pulse {
+      from { opacity: 0.6; }
+      to   { opacity: 1; }
+    }
+
+    svg.bottle { width: 160px; height: 380px; filter: drop-shadow(0 20px 60px rgba(255,69,0,0.4)); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* TICKER */
+    .ticker {
+      background: var(--fire);
+      padding: 12px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .ticker-inner {
+      display: inline-flex;
+      animation: ticker 18s linear infinite;
+    }
+    .ticker-item {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.1em;
+      padding: 0 36px;
+      color: var(--cream);
+    }
+    .ticker-sep { color: var(--gold); opacity: 0.8; }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* INGREDIENTS */
+    #ingredients {
+      padding: 120px 48px;
+      position: relative;
+    }
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--fire);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--cream);
+      margin-bottom: 64px;
+    }
+    .section-title span { color: var(--gold); font-style: italic; }
+
+    .ingredients-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2px;
+    }
+    .ing-card {
+      background: rgba(255,248,238,0.03);
+      border: 1px solid rgba(255,248,238,0.06);
+      padding: 40px 36px;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .ing-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 3px;
+      background: linear-gradient(90deg, var(--fire), var(--gold));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s cubic-bezier(.23,1,.32,1);
+    }
+    .ing-card:hover { background: rgba(255,69,0,0.07); border-color: rgba(255,69,0,0.2); transform: translateY(-4px); }
+    .ing-card:hover::before { transform: scaleX(1); }
+    .ing-icon { font-size: 2.2rem; margin-bottom: 20px; display: block; }
+    .ing-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .ing-desc {
+      font-size: 0.75rem;
+      line-height: 1.9;
+      color: rgba(255,248,238,0.55);
+      letter-spacing: 0.03em;
+    }
+
+    /* ABOUT / HERO 2 */
+    #about {
+      padding: 120px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-img-wrap {
+      position: relative;
+    }
+    .about-rect {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: linear-gradient(135deg, rgba(255,69,0,0.25), rgba(255,184,0,0.12));
+      border: 1px solid rgba(255,140,0,0.2);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .about-rect-inner {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 7rem;
+      color: rgba(255,140,0,0.12);
+      letter-spacing: -0.02em;
+      text-align: center;
+      line-height: 1;
+      user-select: none;
+    }
+    .about-badge {
+      position: absolute;
+      bottom: -24px;
+      right: -24px;
+      width: 110px; height: 110px;
+      background: var(--fire);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      line-height: 1.2;
+      color: var(--cream);
+      animation: spin-slow 20s linear infinite;
+    }
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    .about-text .section-title { margin-bottom: 24px; }
+    .about-body {
+      font-size: 0.8rem;
+      line-height: 2;
+      color: rgba(255,248,238,0.6);
+      letter-spacing: 0.04em;
+      margin-bottom: 32px;
+    }
+    .about-stat-row {
+      display: flex; gap: 40px;
+      margin-top: 40px;
+    }
+    .stat-item {}
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,248,238,0.45);
+      margin-top: 4px;
+    }
+
+    /* PRODUCT */
+    #product {
+      padding: 120px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #product::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255,69,0,0.08) 0%, transparent 70%);
+    }
+    .product-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 72px;
+      position: relative;
+    }
+    .product-card {
+      background: rgba(255,248,238,0.03);
+      border: 1px solid rgba(255,248,238,0.07);
+      border-radius: 4px;
+      padding: 48px 32px 40px;
+      transition: transform 0.35s cubic-bezier(.23,1,.32,1), background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .product-card.featured {
+      background: rgba(255,69,0,0.1);
+      border-color: rgba(255,69,0,0.35);
+    }
+    .product-card:hover { transform: translateY(-8px); background: rgba(255,69,0,0.09); }
+    .product-badge {
+      position: absolute;
+      top: 18px; right: 18px;
+      background: var(--fire);
+      color: var(--cream);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      padding: 4px 12px;
+      border-radius: 2px;
+    }
+    .product-emoji { font-size: 3.5rem; margin-bottom: 24px; display: block; }
+    .product-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 10px;
+    }
+    .product-tagline {
+      font-size: 0.72rem;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .product-desc {
+      font-size: 0.75rem;
+      line-height: 1.9;
+      color: rgba(255,248,238,0.5);
+      margin-bottom: 28px;
+    }
+    .product-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      color: var(--gold);
+    }
+    .product-price small {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: rgba(255,248,238,0.4);
+      letter-spacing: 0.08em;
+    }
+    .product-btn {
+      display: block;
+      margin-top: 24px;
+      background: transparent;
+      border: 1px solid rgba(255,248,238,0.2);
+      color: var(--cream);
+      padding: 12px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: none;
+      border-radius: 2px;
+      transition: background 0.2s, border-color 0.2s;
+      width: 100%;
+    }
+    .product-btn:hover { background: var(--fire); border-color: var(--fire); }
+    .product-card.featured .product-btn { background: var(--fire); border-color: var(--fire); }
+
+    /* BENEFITS */
+    #benefits {
+      padding: 120px 48px;
+      background: linear-gradient(180deg, transparent, rgba(255,69,0,0.05), transparent);
+    }
+    .benefits-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-top: 64px;
+    }
+    .benefit-row {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255,248,238,0.06);
+      opacity: 0;
+      transform: translateX(-20px);
+      animation: slideIn 0.7s forwards;
+    }
+    .benefit-row:nth-child(1) { animation-delay: 0.1s; }
+    .benefit-row:nth-child(2) { animation-delay: 0.25s; }
+    .benefit-row:nth-child(3) { animation-delay: 0.4s; }
+    .benefit-row:nth-child(4) { animation-delay: 0.55s; animation: slideIn 0.7s 0.55s forwards; border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    @keyframes slideIn {
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .benefit-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      color: rgba(255,140,0,0.2);
+      min-width: 56px;
+      line-height: 1;
+    }
+    .benefit-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 8px;
+    }
+    .benefit-body {
+      font-size: 0.74rem;
+      line-height: 1.9;
+      color: rgba(255,248,238,0.5);
+    }
+    .benefits-visual {
+      position: sticky;
+      top: 100px;
+    }
+    .benefits-big-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 11vw, 9rem);
+      line-height: 0.88;
+      color: rgba(255,140,0,0.07);
+      letter-spacing: -0.02em;
+      user-select: none;
+    }
+    .benefits-big-text span { color: rgba(255,69,0,0.15); }
+
+    /* TESTIMONIALS */
+    #testimonials {
+      padding: 120px 48px;
+    }
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 64px;
+    }
+    .testi-card {
+      background: rgba(255,248,238,0.03);
+      border: 1px solid rgba(255,248,238,0.06);
+      padding: 36px 28px;
+      border-radius: 4px;
+      transition: transform 0.3s;
+    }
+    .testi-card:hover { transform: translateY(-4px); }
+    .testi-stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 18px; letter-spacing: 0.08em; }
+    .testi-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-style: italic;
+      line-height: 1.7;
+      color: var(--cream);
+      margin-bottom: 24px;
+    }
+    .testi-author {
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,248,238,0.4);
+    }
+    .testi-author strong { color: var(--gold); }
+
+    /* CTA BANNER */
+    #cta {
+      margin: 0 48px 120px;
+      background: linear-gradient(135deg, var(--fire), var(--honey));
+      border-radius: 6px;
+      padding: 80px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #cta::before {
+      content: 'GINGER';
+      position: absolute;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18rem;
+      color: rgba(255,255,255,0.05);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .cta-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      color: var(--cream);
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .cta-sub {
+      font-size: 0.8rem;
+      color: rgba(255,248,238,0.75);
+      letter-spacing: 0.06em;
+      margin-bottom: 40px;
+      position: relative;
+    }
+    .cta-form {
+      display: flex;
+      gap: 0;
+      max-width: 420px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .cta-input {
+      flex: 1;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-right: none;
+      color: var(--cream);
+      padding: 14px 20px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      outline: none;
+      border-radius: 2px 0 0 2px;
+    }
+    .cta-input::placeholder { color: rgba(255,248,238,0.5); }
+    .cta-submit {
+      background: var(--bark);
+      color: var(--cream);
+      border: none;
+      padding: 14px 28px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: none;
+      border-radius: 0 2px 2px 0;
+      transition: background 0.2s;
+    }
+    .cta-submit:hover { background: var(--soil); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid rgba(255,248,238,0.06);
+      padding: 60px 48px;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+    }
+    .footer-brand {}
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .footer-tagline {
+      font-size: 0.72rem;
+      color: rgba(255,248,238,0.4);
+      line-height: 1.8;
+      letter-spacing: 0.04em;
+      max-width: 240px;
+    }
+    .footer-col h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.14em;
+      color: var(--cream);
+      margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 12px; }
+    .footer-col a {
+      text-decoration: none;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      color: rgba(255,248,238,0.4);
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom {
+      padding: 24px 48px;
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255,248,238,0.04);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: rgba(255,248,238,0.25);
+      text-transform: uppercase;
+    }
+
+    .price-strike {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      color: rgba(255,248,238,0.35);
+      text-decoration: line-through;
+      margin-top: 4px;
+      letter-spacing: 0.05em;
+    }
+    .product-price .save-tag {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--bark);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      padding: 2px 8px;
+      border-radius: 2px;
+      font-weight: 600;
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    /* PHOTO GALLERY */
+    #gallery {
+      padding: 0 48px 100px;
+    }
+    .gallery-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--fire);
+      margin-bottom: 12px;
+    }
+    .gallery-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 48px;
+    }
+    .gallery-title span { color: var(--gold); font-style: italic; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 320px;
+      gap: 12px;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      background: rgba(255,69,0,0.08);
+      border: 1px solid rgba(255,140,0,0.12);
+      cursor: none;
+    }
+    .gallery-item:first-child {
+      grid-row: unset;
+    }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(.23,1,.32,1), filter 0.4s;
+      filter: brightness(0.85) saturate(1.15);
+    }
+    .gallery-item:hover img {
+      transform: scale(1.07);
+      filter: brightness(1) saturate(1.3);
+    }
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(26,13,0,0.6) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-caption {
+      position: absolute;
+      bottom: 16px; left: 16px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      color: var(--cream);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .gallery-item:hover .gallery-caption { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 900px) {
+      #gallery { padding: 0 24px 80px; }
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 200px;
+      }
+      .gallery-item:first-child { grid-row: unset; }
+    }
+      nav { padding: 18px 24px; }
+      .nav-links { display: none; }
+      #hero { padding: 120px 24px 80px; }
+      .hero-visual { display: none; }
+      #ingredients { padding: 80px 24px; }
+      #about { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
+      #product { padding: 80px 24px; }
+      .product-cards { grid-template-columns: 1fr; }
+      #benefits { padding: 80px 24px; }
+      .benefits-layout { grid-template-columns: 1fr; }
+      .testimonial-grid { grid-template-columns: 1fr; }
+      #cta { margin: 0 24px 80px; padding: 60px 32px; }
+      footer { grid-template-columns: 1fr 1fr; padding: 48px 24px; }
+      .footer-bottom { padding: 18px 24px; flex-direction: column; gap: 8px; }
+    }
+    /* GREETING PAGE */
+    #main-site {
+      display: block;
+    }
+    #greeting {
+      width: 100%;
+      height: 100vh;
+      background: var(--soil);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+    #greeting.hide {
+      display: none;
+    }
+    .greet-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(255,69,0,0.18) 0%, rgba(255,140,0,0.07) 45%, transparent 70%);
+    }
+    .greet-grain {
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+      background-size: 180px;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    .greet-orb-1 {
+      position: absolute;
+      width: 600px; height: 600px;
+      background: rgba(255,69,0,0.1);
+      border-radius: 50%;
+      filter: blur(80px);
+      top: -150px; right: -150px;
+      animation: drift 10s ease-in-out infinite alternate;
+    }
+    .greet-orb-2 {
+      position: absolute;
+      width: 400px; height: 400px;
+      background: rgba(255,184,0,0.08);
+      border-radius: 50%;
+      filter: blur(70px);
+      bottom: -100px; left: -100px;
+      animation: drift 14s ease-in-out infinite alternate-reverse;
+    }
+    .greet-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      width: 100%;
+      padding: 40px;
+      gap: 48px;
+    }
+    .greet-question {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 6vw, 4rem);
+      font-weight: 900;
+      color: var(--cream);
+      line-height: 1.15;
+      letter-spacing: 0.01em;
+      animation: greetIn 1s 0.3s cubic-bezier(.23,1,.32,1) both;
+    }
+    .greet-question em {
+      font-style: italic;
+      color: var(--fire);
+      display: block;
+      font-size: 1.1em;
+    }
+    .greet-btn {
+      background: var(--fire);
+      color: var(--cream);
+      border: none;
+      padding: 20px 64px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+      animation: greetIn 1s 0.6s cubic-bezier(.23,1,.32,1) both;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .greet-btn:hover { background: var(--amber); transform: translateY(-3px); }
+    @keyframes greetIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- GREETING PAGE -->
+  <div id="greeting">
+    <div class="greet-bg"></div>
+    <div class="greet-grain"></div>
+    <div class="greet-orb-1"></div>
+    <div class="greet-orb-2"></div>
+    <div class="greet-content">
+      <p class="greet-question">Want to become a <em>Gingerholic?</em></p>
+      <button class="greet-btn" id="enterBtn">Enter the Fire ⚡</button>
+    </div>
+  </div>
+
+  <!-- Greeting Script — must be outside #main-site -->
+  <script>
+    document.getElementById('enterBtn').addEventListener('click', function() {
+      var greeting = document.getElementById('greeting');
+      var mainSite = document.getElementById('main-site');
+      greeting.style.transition = 'opacity 0.8s ease, transform 0.8s cubic-bezier(.23,1,.32,1)';
+      greeting.style.opacity = '0';
+      greeting.style.transform = 'scale(1.04)';
+      greeting.style.pointerEvents = 'none';
+      setTimeout(function() {
+        greeting.style.display = 'none';
+        mainSite.style.display = 'block';
+      }, 850);
+    });
+  </script>
+
+  <!-- MAIN SITE -->
+  <div id="main-site">
+
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="javascript:void(0)" class="nav-logo">Gingerholic</a>
+    <ul class="nav-links">
+      <li><a href="#ingredients">Ingredients</a></li>
+      <li><a href="#product">Shop</a></li>
+      <li><a href="#about">Our Story</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#cta" class="nav-cta">Order Now</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grain"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">✦ Premium Wellness Shots ✦</p>
+      <h1 class="hero-title">
+        Fire in<br>
+        <em>Every Drop.</em>
+      </h1>
+      <p class="hero-sub">
+        Cold-pressed ginger extract, zesty lemon juice, a pinch of salt & pepper,
+        nature's electrolytes, and raw honey — crafted into one potent shot
+        that ignites your morning and fuels your day.
+      </p>
+      <div class="hero-btns">
+        <a href="#product" class="btn-primary">Shop the Shots</a>
+        <a href="#ingredients" class="btn-ghost">See What's Inside</a>
+      </div>
+    </div>
+
+    <!-- Bottle SVG -->
+    <div class="hero-visual">
+      <div class="bottle-wrap">
+        <div class="bottle-glow"></div>
+        <svg class="bottle" viewBox="0 0 120 340" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="bottleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#FF6320;stop-opacity:1"/>
+              <stop offset="40%" style="stop-color:#FFB020;stop-opacity:1"/>
+              <stop offset="100%" style="stop-color:#D45010;stop-opacity:1"/>
+            </linearGradient>
+            <linearGradient id="capGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#2A1500"/>
+              <stop offset="100%" style="stop-color:#1A0D00"/>
+            </linearGradient>
+            <linearGradient id="labelGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#FFF8EE;stop-opacity:0.12"/>
+              <stop offset="100%" style="stop-color:#FFF8EE;stop-opacity:0.04"/>
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <!-- Bottle body -->
+          <path d="M35 80 Q28 95 26 140 L24 280 Q24 310 60 310 Q96 310 96 280 L94 140 Q92 95 85 80 Z"
+                fill="url(#bottleGrad)" opacity="0.95"/>
+          <!-- Shine -->
+          <path d="M38 90 Q33 110 32 150 L31 270 Q31 295 42 300 Q38 280 38 240 L38 150 Q38 110 40 90 Z"
+                fill="rgba(255,255,255,0.18)" />
+          <!-- Liquid top surface -->
+          <ellipse cx="60" cy="130" rx="32" ry="8" fill="rgba(255,200,0,0.25)"/>
+          <!-- Label area -->
+          <rect x="30" y="145" width="60" height="120" rx="4" fill="url(#labelGrad)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+          <!-- Label text -->
+          <text x="60" y="177" text-anchor="middle" font-family="Georgia, serif" font-size="8" font-weight="bold" fill="#FFF8EE" opacity="0.9">GINGERHOLIC</text>
+          <text x="60" y="190" text-anchor="middle" font-family="Georgia, serif" font-size="5.5" fill="#FFB800" opacity="0.85">SHOTS</text>
+          <!-- Divider -->
+          <line x1="35" y1="198" x2="85" y2="198" stroke="rgba(255,184,0,0.3)" stroke-width="0.5"/>
+          <!-- Small icons row -->
+          <text x="60" y="216" text-anchor="middle" font-size="9" fill="#FFF8EE" opacity="0.7">🫚🍋🍯</text>
+          <text x="60" y="232" text-anchor="middle" font-family="monospace" font-size="4.5" fill="rgba(255,248,238,0.5)" letter-spacing="1">60ml · RAW · POTENT</text>
+          <!-- Neck -->
+          <path d="M46 60 Q44 70 40 80 L80 80 Q76 70 74 60 Z" fill="url(#bottleGrad)"/>
+          <path d="M50 50 L70 50 L74 60 L46 60 Z" fill="url(#bottleGrad)"/>
+          <!-- Cap -->
+          <rect x="46" y="34" width="28" height="18" rx="3" fill="url(#capGrad)" stroke="rgba(255,140,0,0.3)" stroke-width="1"/>
+          <text x="60" y="46" text-anchor="middle" font-family="Georgia, serif" font-size="5.5" font-weight="bold" fill="#FFB800">GH</text>
+          <!-- Bottom shine -->
+          <ellipse cx="60" cy="305" rx="28" ry="5" fill="rgba(0,0,0,0.25)"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-inner">
+      <span class="ticker-item">🫚 Cold-Pressed Ginger</span>
+      <span class="ticker-item ticker-sep">✦</span>
+      <span class="ticker-item">🍋 Fresh Lemon Juice</span>
+      <span class="ticker-item ticker-sep">✦</span>
+      <span class="ticker-item">🍯 Raw Honey</span>
+      <span class="ticker-item ticker-sep">✦</span>
+      <span class="ticker-item">⚡ Natural Electrolytes</span>
+      <span class="ticker-item ticker-sep">✦</span>
+      <span class="ticker-item">🧂 Himalayan Salt</span>
+      <span class="ticker-item ticker-sep">✦</span>
+      <span class="ticker-item">🌶 Black Pepper</span>
+      <span class="ticker-item ticker-sep">✦</span>
+      <span class="ticker-item">🫚 Cold-Pressed Ginger</span>
+      <span class="ticker-item ticker-sep">✦</span>
+      <span class="ticker-item">🍋 Fresh Lemon Juice</span>
+      <span class="ticker-item ticker-sep">✦</span>
+      <span class="ticker-item">🍯 Raw Honey</span>
+      <span class="ticker-item ticker-sep">✦</span>
+      <span class="ticker-item">⚡ Natural Electrolytes</span>
+      <span class="ticker-item ticker-sep">✦</span>
+      <span class="ticker-item">🧂 Himalayan Salt</span>
+      <span class="ticker-item ticker-sep">✦</span>
+      <span class="ticker-item">🌶 Black Pepper</span>
+      <span class="ticker-item ticker-sep">✦</span>
+    </div>
+  </div>
+
+  <!-- INGREDIENTS -->
+  <section id="ingredients">
+    <p class="section-label">What's Inside</p>
+    <h2 class="section-title">Six ingredients.<br><span>Zero compromise.</span></h2>
+    <div class="ingredients-grid">
+      <div class="ing-card">
+        <span class="ing-icon">🫚</span>
+        <div class="ing-name">Ginger Extract</div>
+        <p class="ing-desc">Cold-pressed from fresh ginger root for maximum gingerol potency. The heart of every shot — fiery, warming, and deeply therapeutic.</p>
+      </div>
+      <div class="ing-card">
+        <span class="ing-icon">🍋</span>
+        <div class="ing-name">Lemon Juice</div>
+        <p class="ing-desc">Freshly squeezed to preserve every vitamin C molecule. Balances ginger's heat with a bright citrus punch and aids absorption.</p>
+      </div>
+      <div class="ing-card">
+        <span class="ing-icon">🧂</span>
+        <div class="ing-name">Himalayan Salt</div>
+        <p class="ing-desc">A precise pinch of mineral-rich pink salt to balance flavours and provide trace minerals that support cellular hydration.</p>
+      </div>
+      <div class="ing-card">
+        <span class="ing-icon">🌶</span>
+        <div class="ing-name">Black Pepper</div>
+        <p class="ing-desc">Freshly cracked black pepper with piperine — scientifically shown to amplify nutrient bioavailability by up to 2000%.</p>
+      </div>
+      <div class="ing-card">
+        <span class="ing-icon">⚡</span>
+        <div class="ing-name">Electrolytes</div>
+        <p class="ing-desc">Natural coconut-derived electrolytes to replenish what your body needs — potassium, sodium, magnesium — in one small shot.</p>
+      </div>
+      <div class="ing-card">
+        <span class="ing-icon">🍯</span>
+        <div class="ing-name">Raw Honey</div>
+        <p class="ing-desc">Unprocessed, enzyme-rich honey from single-origin hives. Adds a floral sweetness and antimicrobial properties to every bottle.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-img-wrap">
+      <div class="about-rect">
+        <div class="about-rect-inner">GINGER<br>HOLIC</div>
+      </div>
+      <div class="about-badge">100%<br>NATURAL</div>
+    </div>
+    <div class="about-text">
+      <p class="section-label">Our Story</p>
+      <h2 class="section-title">Brewed with<br><span>obsession.</span></h2>
+      <p class="about-body">
+        Gingerholic was born from a simple belief: your morning ritual should hit like a thunderbolt, not a lullaby. We spent two years perfecting the exact ratio of ginger, lemon, honey, and pepper that creates a shot you'll feel the moment it hits your throat.
+      </p>
+      <p class="about-body">
+        Every batch is cold-pressed, never heated, never diluted. We source our ginger directly from small farmers and our honey from traceable single-origin hives. When you crack open a Gingerholic shot, you're tasting over 45g of fresh ginger compressed into just 20ml.
+      </p>
+      <div class="about-stat-row">
+        <div class="stat-item">
+          <div class="stat-num">45g</div>
+          <div class="stat-label">Ginger per 20ml</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">6</div>
+          <div class="stat-label">Ingredients Only</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">0°C</div>
+          <div class="stat-label">Cold-Pressed</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCT -->
+  <section id="product">
+    <p class="section-label">Shop</p>
+    <h2 class="section-title">Pick Your <span>Intensity</span></h2>
+    <div class="product-cards">
+      <div class="product-card">
+        <span class="product-emoji">🌿</span>
+        <div class="product-name">The Mild Shot</div>
+        <div class="product-tagline">Smooth Ignition</div>
+        <p class="product-desc">A gentler introduction — same premium ingredients, tuned for those new to the ginger shot lifestyle. Bright, honeyed, with a soft kick.</p>
+        <div class="product-price">₹30 <small>/ 20ml</small></div>
+        <button class="product-btn">Add to Cart</button>
+      </div>
+      <div class="product-card featured">
+        <div class="product-badge">BESTSELLER</div>
+        <span class="product-emoji">🔥</span>
+        <div class="product-name">The Original</div>
+        <div class="product-tagline">Maximum Firepower</div>
+        <p class="product-desc">The classic Gingerholic experience. Full-strength ginger extract, sharp lemon, a bold pepper bite, and raw honey finish. Legendary.</p>
+        <div class="product-price">₹50 <small>/ 20ml</small></div>
+        <button class="product-btn">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <span class="product-emoji">⚡</span>
+        <div class="product-name">The Bundle</div>
+        <div class="product-tagline">30-Day Supply</div>
+        <p class="product-desc">A month of mornings sorted. 30 Original shots, cold-packed and delivered to your door. Build the habit. Feel the shift.</p>
+        <div class="product-price">
+          ₹1,200 <span class="save-tag">SAVE ₹300</span><small>/ 30 shots</small>
+          <div class="price-strike">was ₹1,500</div>
+        </div>
+        <button class="product-btn">Add to Cart</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFITS -->
+  <section id="benefits">
+    <p class="section-label">Why It Works</p>
+    <h2 class="section-title">What happens when<br><span>you shoot daily</span></h2>
+    <div class="benefits-layout">
+      <div>
+        <div class="benefit-row" style="background: rgba(255,69,0,0.07); border: 1px solid rgba(255,69,0,0.3); border-radius: 4px; padding: 28px 24px; margin-bottom: 40px; padding-bottom: 28px;">
+          <div class="benefit-num" style="color: var(--fire); font-size: 2.8rem;">★</div>
+          <div>
+            <div class="benefit-title" style="color: var(--fire); font-size: 1.25rem;">Spartan Rage — 78%</div>
+            <p class="benefit-body">Our signature compound blend delivers a fierce 78% active gingerol concentration — the highest of any wellness shot on the market. Named after the unstoppable warrior spirit, Spartan Rage hits hard, fast, and without apology. Feel it in 60 seconds.</p>
+          </div>
+        </div>
+        <div class="benefit-row">
+          <div class="benefit-num">01</div>
+          <div>
+            <div class="benefit-title">Metabolism Ignited</div>
+            <p class="benefit-body">Gingerols activate thermogenesis — your body's heat-production process — helping metabolise energy faster from the very first sip.</p>
+          </div>
+        </div>
+        <div class="benefit-row">
+          <div class="benefit-num">02</div>
+          <div>
+            <div class="benefit-title">Gut Health Fortified</div>
+            <p class="benefit-body">Ginger's anti-inflammatory compounds soothe the digestive tract, reduce bloating, and support healthy gut microbiome balance.</p>
+          </div>
+        </div>
+        <div class="benefit-row">
+          <div class="benefit-num">03</div>
+          <div>
+            <div class="benefit-title">Immunity Strengthened</div>
+            <p class="benefit-body">Vitamin C from lemon, antimicrobial honey, and bioavailability-boosting pepper combine into a natural daily immune protocol.</p>
+          </div>
+        </div>
+        <div class="benefit-row">
+          <div class="benefit-num">04</div>
+          <div>
+            <div class="benefit-title">Hydration Restored</div>
+            <p class="benefit-body">Natural electrolytes replenish mineral balance so you start the day — or end a workout — with optimal cellular hydration.</p>
+          </div>
+        </div>
+      </div>
+      <div class="benefits-visual">
+        <div class="benefits-big-text">FIRE<br><span>FUEL</span><br>FOCUS</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <p class="section-label">Real Reviews</p>
+    <h2 class="section-title">They're <span>hooked.</span></h2>
+    <div class="testimonial-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"I've been doing a Gingerholic shot every morning for 3 months. My brain fog is gone and I honestly don't need coffee anymore. This thing hits."</p>
+        <div class="testi-author"><strong>Siddesh</strong> — Bengaluru</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"The burn is real but so are the results. My digestion has completely transformed. The honey finish makes it somehow addictive."</p>
+        <div class="testi-author"><strong>Mithun</strong> — Mumbai</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"As a trainer I've tried every wellness shot on the market. Gingerholic is the only one that actually tastes like it's working. That pepper kick is everything."</p>
+        <div class="testi-author"><strong>Sudharshan</strong> — Chennai</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEFORE & AFTER -->
+  <section id="before-after" style="padding: 120px 48px;">
+    <p class="section-label">The Transformation</p>
+    <h2 class="section-title">Before Gingerholic.<br><span>After Gingerholic.</span></h2>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3px; margin-top: 64px; border-radius: 6px; overflow: hidden;">
+
+      <!-- BEFORE -->
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); padding: 48px 40px;">
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 36px;">
+          <div style="width: 44px; height: 44px; background: rgba(255,255,255,0.06); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">😩</div>
+          <div>
+            <div style="font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.1em; color: rgba(255,248,238,0.35);">BEFORE</div>
+            <div style="font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,248,238,0.25);">Without the shot</div>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div style="display: flex; gap: 16px; align-items: flex-start;">
+            <span style="color: rgba(255,69,0,0.4); font-size: 1rem; margin-top: 2px;">✗</span>
+            <div>
+              <div style="font-family: 'Playfair Display', serif; font-size: 1rem; color: rgba(255,248,238,0.5); margin-bottom: 4px;">Sluggish Mornings</div>
+              <p style="font-size: 0.72rem; color: rgba(255,248,238,0.3); line-height: 1.8;">Wake up groggy, rely on 3 cups of coffee just to feel human before noon.</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 16px; align-items: flex-start;">
+            <span style="color: rgba(255,69,0,0.4); font-size: 1rem; margin-top: 2px;">✗</span>
+            <div>
+              <div style="font-family: 'Playfair Display', serif; font-size: 1rem; color: rgba(255,248,238,0.5); margin-bottom: 4px;">Bloating & Brain Fog</div>
+              <p style="font-size: 0.72rem; color: rgba(255,248,238,0.3); line-height: 1.8;">Constant digestive discomfort, lack of mental clarity, zero afternoon focus.</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 16px; align-items: flex-start;">
+            <span style="color: rgba(255,69,0,0.4); font-size: 1rem; margin-top: 2px;">✗</span>
+            <div>
+              <div style="font-family: 'Playfair Display', serif; font-size: 1rem; color: rgba(255,248,238,0.5); margin-bottom: 4px;">Weak Immunity</div>
+              <p style="font-size: 0.72rem; color: rgba(255,248,238,0.3); line-height: 1.8;">Catching every cold going around, feeling run-down through the season.</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 16px; align-items: flex-start;">
+            <span style="color: rgba(255,69,0,0.4); font-size: 1rem; margin-top: 2px;">✗</span>
+            <div>
+              <div style="font-family: 'Playfair Display', serif; font-size: 1rem; color: rgba(255,248,238,0.5); margin-bottom: 4px;">Low Energy All Day</div>
+              <p style="font-size: 0.72rem; color: rgba(255,248,238,0.3); line-height: 1.8;">Mid-afternoon crash, no drive to work out, relying on sugar for a quick fix.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AFTER -->
+      <div style="background: rgba(255,69,0,0.07); border: 1px solid rgba(255,69,0,0.25); padding: 48px 40px;">
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 36px;">
+          <div style="width: 44px; height: 44px; background: rgba(255,69,0,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">⚡</div>
+          <div>
+            <div style="font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.1em; color: var(--gold);">AFTER</div>
+            <div style="font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,184,0,0.5);">With Gingerholic daily</div>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div style="display: flex; gap: 16px; align-items: flex-start;">
+            <span style="color: var(--gold); font-size: 1rem; margin-top: 2px;">✓</span>
+            <div>
+              <div style="font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--cream); margin-bottom: 4px;">Explosive Morning Energy</div>
+              <p style="font-size: 0.72rem; color: rgba(255,248,238,0.55); line-height: 1.8;">One shot and you're fired up in 60 seconds — no caffeine crash, just clean sustained energy.</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 16px; align-items: flex-start;">
+            <span style="color: var(--gold); font-size: 1rem; margin-top: 2px;">✓</span>
+            <div>
+              <div style="font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--cream); margin-bottom: 4px;">Sharp Gut, Clear Mind</div>
+              <p style="font-size: 0.72rem; color: rgba(255,248,238,0.55); line-height: 1.8;">Ginger's anti-inflammatory power eliminates bloating. Your thinking sharpens within days.</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 16px; align-items: flex-start;">
+            <span style="color: var(--gold); font-size: 1rem; margin-top: 2px;">✓</span>
+            <div>
+              <div style="font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--cream); margin-bottom: 4px;">Iron Immunity</div>
+              <p style="font-size: 0.72rem; color: rgba(255,248,238,0.55); line-height: 1.8;">Vitamin C, raw honey, and black pepper create a triple-shield defence against illness.</p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 16px; align-items: flex-start;">
+            <span style="color: var(--gold); font-size: 1rem; margin-top: 2px;">✓</span>
+            <div>
+              <div style="font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--cream); margin-bottom: 4px;">All-Day Spartan Power</div>
+              <p style="font-size: 0.72rem; color: rgba(255,248,238,0.55); line-height: 1.8;">78% Spartan Rage gingerol concentration keeps your metabolism and stamina burning all day long.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom bar -->
+    <div style="margin-top: 3px; background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,69,0,0.1)); border: 1px solid rgba(255,69,0,0.15); border-radius: 0 0 6px 6px; padding: 20px 40px; display: flex; align-items: center; justify-content: center; gap: 12px;">
+      <span style="font-size: 1.2rem;">🔥</span>
+      <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.95rem; color: rgba(255,248,238,0.6);">Most people feel the difference within <strong style="color: var(--gold);">3 days</strong> of their first shot.</p>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section id="cta">
+    <h2 class="cta-title">Ready to become<br>a Gingerholic?</h2>
+    <p class="cta-sub">Join 10,000+ people who start every morning with fire. Get 10% off your first order.</p>
+    <div class="cta-form">
+      <input type="email" class="cta-input" placeholder="your@email.com" />
+      <button class="cta-submit">Ignite</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">
+      <div class="footer-logo">Gingerholic</div>
+      <p class="footer-tagline">Six ingredients. One obsession. A shot that changes how you start every single day.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="javascript:void(0)">The Original</a></li>
+        <li><a href="javascript:void(0)">The Mild Shot</a></li>
+        <li><a href="javascript:void(0)">30-Day Bundle</a></li>
+        <li><a href="javascript:void(0)">Gift Packs</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="javascript:void(0)">Our Story</a></li>
+        <li><a href="javascript:void(0)">Ingredients</a></li>
+        <li><a href="javascript:void(0)">Wholesale</a></li>
+        <li><a href="javascript:void(0)">Careers</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+917305225162">📞 +91 73052 25162</a></li>
+        <li><a href="javascript:void(0)">Bharanidharan</a></li>
+        <li><a href="javascript:void(0)">Chennai, India</a></li>
+      </ul>
+    </div>
+  </footer>
+  <div class="footer-bottom">
+    <span>© 2025 Gingerholic Shots · Bharanidharan. All rights reserved.</span>
+    <span>Made with 🔥 in India</span>
+  </div>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.transform = `translate(${mx - 8}px, ${my - 8}px)`;
+    });
+    function animateRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.transform = `translate(${rx - 20}px, ${ry - 20}px)`;
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    document.querySelectorAll('a, button, input').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.transform += ' scale(1.8)';
+        cursor.style.background = '#FFB800';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.background = '#FF4500';
+      });
+    });
+
+    // Intersection observer for fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.style.opacity = '1';
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.ing-card, .testi-card, .product-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transition += ', opacity 0.6s ease';
+      observer.observe(el);
+    });
+  </script>
+  </div><!-- end #main-site -->
+
+</body>
+</html>
